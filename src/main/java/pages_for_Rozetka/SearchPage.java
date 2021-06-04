@@ -4,11 +4,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class SearchPage {
     WebDriver webDriver;
+    WebDriverWait wait;
 
     By productOnSearchPage = By.xpath("//div[@class='goods-tile__inner']");
     By priceOfProduct = By.xpath(".//span[@class='goods-tile__price-value']");
@@ -18,6 +22,7 @@ public class SearchPage {
 
     public SearchPage (WebDriver webDriver) {
         this.webDriver = webDriver;
+        wait = new WebDriverWait(webDriver, 10);
     }
 
     public void findProductWithPriceLessThan(String maxPrice) throws Exception {
@@ -48,6 +53,6 @@ public class SearchPage {
     }
 
     public void chooseProductCategory(String category){
-        webDriver.findElement(By.cssSelector("li>a[href*="+category+"]")).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("li>a[href*="+category+"]"))).click();
     }
 }

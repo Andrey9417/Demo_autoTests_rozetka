@@ -54,6 +54,7 @@ public class ProductPage {
         }
         wait.until(ExpectedConditions.visibilityOfElementLocated(compareButton)).click();
         count++;
+        Thread.sleep(1000);
         if (!webDriver.findElement(compareListCounter).getText().equals(count+"")){
             throw new Exception("Product wasn't added to compare list");
         }
