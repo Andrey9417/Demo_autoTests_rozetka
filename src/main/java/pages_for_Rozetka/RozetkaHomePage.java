@@ -14,8 +14,10 @@ public class RozetkaHomePage {
     Actions actions;
 
     By menuElementComputers = By.xpath("//sidebar-fat-menu//a[contains (@href, 'computers-notebooks')]");
+    By smartPhonesTV = By.xpath("//sidebar-fat-menu//a[contains (@href, 'telefony-tv')]");
     By submenuElementMonitors = By.xpath("//div[@class='menu__main-cats']//a[contains (@href, 'monitors')]");
     By submenuElementNotebooks = By.cssSelector("a.menu__hidden-title[href*='/notebooks/']");
+    By submenuElementPhones = By.cssSelector("a.menu__hidden-title[href*='/mobile-phones/']");
     By searchField = By.name("search");
 
     public RozetkaHomePage (WebDriver webDriver) {
@@ -34,6 +36,12 @@ public class RozetkaHomePage {
         WebElement linkComputersAndNotebooks = webDriver.findElement(menuElementComputers);
         actions.moveToElement(linkComputersAndNotebooks).perform();
         wait.until(ExpectedConditions.visibilityOfElementLocated(submenuElementNotebooks)).click();
+    }
+
+    public void searchForPhones() {
+        WebElement linkSmartPhones = webDriver.findElement(smartPhonesTV);
+        actions.moveToElement(linkSmartPhones).perform();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(submenuElementPhones)).click();
     }
 
     public void searchByName(String name){

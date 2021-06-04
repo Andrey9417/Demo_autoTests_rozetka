@@ -6,10 +6,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages_for_Rozetka.CompareListPage;
-import pages_for_Rozetka.ProductPage;
-import pages_for_Rozetka.RozetkaHomePage;
-import pages_for_Rozetka.SearchPage;
+import pages_for_Rozetka.*;
 
 import java.util.concurrent.TimeUnit;
 
@@ -27,6 +24,7 @@ public class RozetkaCompareMonitorPageTest {
     SearchPage searchPage;
     ProductPage productPage;
     CompareListPage compareListPage;
+    HeaderFunctionsPage headerFunctionsPage;
 
 
     @BeforeClass
@@ -48,6 +46,7 @@ public class RozetkaCompareMonitorPageTest {
         searchPage = new SearchPage(driver);
         productPage = new ProductPage(driver);
         compareListPage = new CompareListPage(driver);
+        headerFunctionsPage = new HeaderFunctionsPage(driver);
     }
 
     @Test
@@ -57,12 +56,14 @@ public class RozetkaCompareMonitorPageTest {
         priceOfFirstProduct = productPage.getPrice();
         nameOfFirstProduct = productPage.getName();
         productPage.addToCompareList();
-        productPage.moveBack();
+        Assert.assertEquals(headerFunctionsPage.getCompareListCounter(), "1");
+        productPage.navigateBack();
         searchPage.findProductWithPriceLessThan(priceOfFirstProduct);
         priceOfSecondProduct = productPage.getPrice();
         nameOfSecondProduct = productPage.getName();
         productPage.addToCompareList();
-        productPage.moveToCompareList();
+        Assert.assertEquals(headerFunctionsPage.getCompareListCounter(), "2");
+        productPage.navigateToCompareList();
         Assert.assertEquals(compareListPage.getNumberOfProducts(), 2);
         Assert.assertEquals(compareListPage.getPriceByNumber(1), priceOfFirstProduct);
         Assert.assertEquals(compareListPage.getNameByNumber(1), nameOfFirstProduct);
