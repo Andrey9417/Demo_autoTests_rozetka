@@ -63,4 +63,9 @@ public class SearchPage {
         listOfElements = webDriver.findElements(addToBasketButton);
         listOfElements.get(number).click();
     }
+    public void clickToTheFirstPhone(){
+        wait.until(ExpectedConditions.visibilityOfElementLocated(productOnSearchPage)).click();
+    }
+
+
 }
