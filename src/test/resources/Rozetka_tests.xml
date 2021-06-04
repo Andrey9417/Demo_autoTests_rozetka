@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="Rozetka" >
+    <test name="Comparing products" >
+        <classes>
+            <class name="RozetkaCompareMonitorPageTest" />
+        </classes>
+    </test>
+    <test name="Filters" >
+        <classes>
+            <class name="RozetkaFiltersPageTest" />
+        </classes>
+    </test>
+</suite>
