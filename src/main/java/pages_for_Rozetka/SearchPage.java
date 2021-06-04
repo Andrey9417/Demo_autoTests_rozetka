@@ -8,17 +8,19 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class SearchPage {
+
     WebDriver webDriver;
     WebDriverWait wait;
+    List<WebElement> listOfElements;
 
     By productOnSearchPage = By.xpath("//div[@class='goods-tile__inner']");
     By priceOfProduct = By.xpath(".//span[@class='goods-tile__price-value']");
     By linkToProductPage = By.xpath(".//a");
     By banner = By.cssSelector("a#rz-banner");
     By banner_close_button = By.cssSelector("span.exponea-close-cross");
+    By addToBasketButton = By.cssSelector("button.goods-tile__buy-button");
 
     public SearchPage (WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -26,7 +28,7 @@ public class SearchPage {
     }
 
     public void findProductWithPriceLessThan(String maxPrice) throws Exception {
-        List<WebElement> listOfElements = webDriver.findElements(productOnSearchPage);
+        listOfElements = webDriver.findElements(productOnSearchPage);
         boolean found = false;
         for (WebElement webElem : listOfElements) {
             String price = webElem.findElement(priceOfProduct).getText().replace(" ", "");
@@ -54,5 +56,11 @@ public class SearchPage {
 
     public void chooseProductCategory(String category){
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("li>a[href*="+category+"]"))).click();
+    }
+
+    public void addToBasket(int number) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(productOnSearchPage));
+        listOfElements = webDriver.findElements(addToBasketButton);
+        listOfElements.get(number).click();
     }
 }
