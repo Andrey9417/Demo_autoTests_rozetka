@@ -1,7 +1,6 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -13,8 +12,7 @@ import pages_for_Rozetka.SearchPage;
 
 import java.util.concurrent.TimeUnit;
 
-public class RozetkaCompareMonitorPageTest {
-
+public class BasketTests {
     private WebDriver driver;
     private String initialUrl = "https://rozetka.com.ua/";
 
@@ -51,22 +49,7 @@ public class RozetkaCompareMonitorPageTest {
     }
 
     @Test
-    public void test() throws Exception {
-        rozetkaHomePage.searchForMonitors();
-        searchPage.findProductWithPriceLessThan("4000");
-        priceOfFirstProduct = productPage.getPrice();
-        nameOfFirstProduct = productPage.getName();
-        productPage.addToCompareList();
-        productPage.moveBack();
-        searchPage.findProductWithPriceLessThan(priceOfFirstProduct);
-        priceOfSecondProduct = productPage.getPrice();
-        nameOfSecondProduct = productPage.getName();
-        productPage.addToCompareList();
-        productPage.moveToCompareList();
-        Assert.assertEquals(compareListPage.getNumberOfProducts(), 2);
-        Assert.assertEquals(compareListPage.getPriceByNumber(1), priceOfFirstProduct);
-        Assert.assertEquals(compareListPage.getNameByNumber(1), nameOfFirstProduct);
-        Assert.assertEquals(compareListPage.getPriceByNumber(2), priceOfSecondProduct);
-        Assert.assertEquals(compareListPage.getNameByNumber(2), nameOfSecondProduct);
+    public void test() {
+        rozetkaHomePage.searchForNotebooks();
     }
 }
