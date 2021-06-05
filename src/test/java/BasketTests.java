@@ -1,3 +1,4 @@
+import helpClassesRozetka.Product;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -14,16 +15,13 @@ public class BasketTests {
     private WebDriver driver;
     private String initialUrl = "https://rozetka.com.ua/";
 
-    private String priceOfFirstProduct;
-    private String nameOfFirstProduct;
-    private String priceOfSecondProduct;
-    private String nameOfSecondProduct;
 
     RozetkaHomePage rozetkaHomePage;
     SearchPage searchPage;
     ProductPage productPage;
     CompareListPage compareListPage;
     HeaderFunctionsPage headerFunctionsPage;
+    BasketPage basketPage;
 
 
     @BeforeClass
@@ -46,23 +44,26 @@ public class BasketTests {
         productPage = new ProductPage(driver);
         compareListPage = new CompareListPage(driver);
         headerFunctionsPage = new HeaderFunctionsPage(driver);
+        basketPage = new BasketPage(driver);
     }
 
     @Test
-    public void test() throws InterruptedException {
+    public void test() {
         rozetkaHomePage.searchForNotebooks();
-        searchPage.addToBasket(0);
+        Product product1 = searchPage.addToBasket(0);
         Assert.assertEquals(headerFunctionsPage.getBasketCounter(), "1");
         headerFunctionsPage.openBasket();
-        // сравнить название товара
-        // нажать '+'
-        // сравнить название товара
-        // закрыть корзину
+        Assert.assertTrue(basketPage.containsProduct(product1));
+        product1 = basketPage.increaseQuantity(product1);
+        Assert.assertTrue(basketPage.containsProduct(product1));
+        basketPage.closeBasket();
         Assert.assertEquals(headerFunctionsPage.getBasketCounter(), "2");
+        driver.get(initialUrl);
         rozetkaHomePage.searchForPhones();
-        searchPage.addToBasket(0);
+        Product product2 = searchPage.addToBasket(0);
         Assert.assertEquals(headerFunctionsPage.getBasketCounter(), "3");
         headerFunctionsPage.openBasket();
-        // сравнить все товары
+        Assert.assertTrue(basketPage.containsProduct(product2));
+        Assert.assertEquals(basketPage.getNumberOfItems(), 2);
     }
 }
