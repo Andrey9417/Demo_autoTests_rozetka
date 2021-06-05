@@ -69,4 +69,9 @@ public class SearchPage {
         return new Product(webDriver.findElement(productName).getText(),
                             Integer.parseInt(webDriver.findElement(productPrice).getText().replace(" ", "")));
     }
+    public void clickToTheFirstPhone(){
+        wait.until(ExpectedConditions.visibilityOfElementLocated(productOnSearchPage)).click();
+    }
+
+
 }
