@@ -11,4 +11,9 @@
             <class name="RozetkaFiltersPageTest" />
         </classes>
     </test>
+    <test name="Products" >
+        <classes>
+            <class name="ProductPageTests" />
+        </classes>
+    </test>
 </suite>
