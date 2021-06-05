@@ -8,6 +8,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages_for_Rozetka.*;
 
+import java.awt.*;
 import java.util.concurrent.TimeUnit;
 
 public class BasketTests {
@@ -39,7 +40,7 @@ public class BasketTests {
     }
 
     @BeforeMethod
-    public void navigateToSite() {
+    public void navigateToSite() throws AWTException {
         driver.get(initialUrl);
         rozetkaHomePage = new RozetkaHomePage(driver);
         searchPage = new SearchPage(driver);
