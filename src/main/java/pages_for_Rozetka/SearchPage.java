@@ -1,5 +1,6 @@
 package pages_for_Rozetka;
 
+import helpClassesRozetka.Product;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.WebDriver;
@@ -21,6 +22,8 @@ public class SearchPage {
     By banner = By.cssSelector("a#rz-banner");
     By banner_close_button = By.cssSelector("span.exponea-close-cross");
     By addToBasketButton = By.cssSelector("button.goods-tile__buy-button");
+    By productName = By.cssSelector("span.goods-tile__title");
+    By productPrice = By.cssSelector("span.goods-tile__price-value");
 
     public SearchPage (WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -58,9 +61,12 @@ public class SearchPage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("li>a[href*="+category+"]"))).click();
     }
 
-    public void addToBasket(int number) {
+    public Product addToBasket(int number) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(productOnSearchPage));
         listOfElements = webDriver.findElements(addToBasketButton);
         listOfElements.get(number).click();
+        HeaderFunctionsPage.productsInBasketCount++;
+        return new Product(webDriver.findElement(productName).getText(),
+                            Integer.parseInt(webDriver.findElement(productPrice).getText().replace(" ", "")));
     }
 }

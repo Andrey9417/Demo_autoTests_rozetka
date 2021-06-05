@@ -39,5 +39,6 @@ public class ProductPage {
 
     public void addToCompareList() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(compareButton)).click();
+        HeaderFunctionsPage.productsInCompareListCount++;
     }
 }
