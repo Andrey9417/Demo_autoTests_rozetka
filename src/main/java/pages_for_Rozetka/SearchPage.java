@@ -36,24 +36,13 @@ public class SearchPage {
         for (WebElement webElem : listOfElements) {
             String price = webElem.findElement(priceOfProduct).getText().replace(" ", "");
             if (Integer.parseInt(price) < Integer.parseInt(maxPrice)) {
-                moveToProductsPage(webElem);
-//                webElem.findElement(linkToProductPage).click();
+                safeClick(webElem.findElement(linkToProductPage));
                 found = true;
                 break;
             }
         }
         if(!found){
             throw new Exception("product with price less than "+maxPrice+" wasn't found");
-        }
-    }
-    private void moveToProductsPage(WebElement product) {
-        try {
-            product.findElement(linkToProductPage).click();
-        } catch (ElementClickInterceptedException e) {
-            if(webDriver.findElement(banner).isDisplayed()){
-                webDriver.findElement(banner_close_button).click();
-                product.findElement(linkToProductPage).click();
-            }
         }
     }
 

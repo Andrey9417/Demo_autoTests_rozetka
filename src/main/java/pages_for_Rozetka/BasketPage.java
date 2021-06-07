@@ -67,8 +67,8 @@ public class BasketPage {
         wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("(//p[@class='cart-product__price'])["+(i+1)+"]"), text));
     }
 
-    private void waitUntilTotalPriceUpdated(Product p1, int sum) {
-        String text=sum - p1.getOrderedPrice()+" ₴";
+    private void waitUntilTotalPriceUpdated(int difference, int total) {
+        String text=total + difference+" ₴";
         if(!text.equals("0 ₴")){
             wait.until(ExpectedConditions.textToBePresentInElementLocated(totalPrice, text));
         }
@@ -99,7 +99,7 @@ public class BasketPage {
             }
         }
         HeaderFunctionsPage.productsInBasketCount--;
-        waitUntilTotalPriceUpdated(p, sum);
+        waitUntilTotalPriceUpdated(-p.getOrderedPrice(), sum);
     }
 
     public int getTotalPrice() {
@@ -111,4 +111,9 @@ public class BasketPage {
     public boolean isBasketEmpty(){
         return webDriver.findElements(emptyCartDummy).size() == 1;
     }
+
+//    public void addAdditionalServiceByNumber(int number){
+//        List<WebElement> listOfElements = wait.until(ExpectedConditions.visibilityOfAllElements(webDriver.findElements(cartItem)));
+//        webDriver.findElement(cartItem).is
+//    }
 }

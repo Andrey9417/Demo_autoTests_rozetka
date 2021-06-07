@@ -47,7 +47,7 @@ public class BasketTests {
     }
 
     @Test
-    public void test1() {
+    public void testAddProductsToBasket() {
         rozetkaHomePage.searchForNotebooks();
         Product product1 = searchPage.addToBasket(0);
         Assert.assertEquals(headerFunctionsPage.getBasketCounter(), "1");
@@ -67,7 +67,7 @@ public class BasketTests {
     }
 
     @Test
-    public void test2() {
+    public void testRemoveProductsFromBasket() {
         rozetkaHomePage.searchForNotebooks();
         Product product1 = searchPage.addToBasket(0);
         Product product2 = searchPage.addToBasket(1);
@@ -89,4 +89,10 @@ public class BasketTests {
         Assert.assertFalse(headerFunctionsPage.isBasketCounterDisplayed());
         Assert.assertTrue(basketPage.isBasketEmpty());
     }
+
+//    @Test
+//    public void testAdditionalServices() {
+//        rozetkaHomePage.searchForNotebooks();
+//
+//    }
 }
