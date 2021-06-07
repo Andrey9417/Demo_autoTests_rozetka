@@ -36,8 +36,7 @@ public class SearchPage {
         for (WebElement webElem : listOfElements) {
             String price = webElem.findElement(priceOfProduct).getText().replace(" ", "");
             if (Integer.parseInt(price) < Integer.parseInt(maxPrice)) {
-                moveToProductsPage(webElem);
-//                webElem.findElement(linkToProductPage).click();
+                safeClick(webElem.findElement(linkToProductPage));
                 found = true;
                 break;
             }
@@ -46,13 +45,15 @@ public class SearchPage {
             throw new Exception("product with price less than "+maxPrice+" wasn't found");
         }
     }
-    private void moveToProductsPage(WebElement product) {
+
+    private void safeClick(WebElement elem){
         try {
-            product.findElement(linkToProductPage).click();
+            elem.click();
         } catch (ElementClickInterceptedException e) {
             if(webDriver.findElement(banner).isDisplayed()){
                 webDriver.findElement(banner_close_button).click();
-                product.findElement(linkToProductPage).click();
+                wait.until(ExpectedConditions.invisibilityOfElementLocated(banner));
+                elem.click();
             }
         }
     }
@@ -62,12 +63,12 @@ public class SearchPage {
     }
 
     public Product addToBasket(int number) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(productOnSearchPage));
-        listOfElements = webDriver.findElements(addToBasketButton);
-        listOfElements.get(number).click();
+        listOfElements =wait.until(ExpectedConditions.visibilityOfAllElements(webDriver.findElements(productOnSearchPage)));
+        WebElement webElem = listOfElements.get(number).findElement(addToBasketButton);
+        safeClick(webElem);
         HeaderFunctionsPage.productsInBasketCount++;
-        return new Product(webDriver.findElement(productName).getText(),
-                            Integer.parseInt(webDriver.findElement(productPrice).getText().replace(" ", "")));
+        return new Product(listOfElements.get(number).findElement(productName).getText(),
+                            Integer.parseInt(listOfElements.get(number).findElement(productPrice).getText().replace(" ", "")));
     }
     public void clickToTheFirstPhone(){
         wait.until(ExpectedConditions.visibilityOfElementLocated(productOnSearchPage)).click();

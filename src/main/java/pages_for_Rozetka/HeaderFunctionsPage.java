@@ -32,7 +32,17 @@ public class HeaderFunctionsPage {
         return webDriver.findElement(basketCounter).getText();
     }
 
+    public boolean isBasketCounterDisplayed() {
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(basketCounter));
+        return false;
+    }
+
     public void openBasket(){
         webDriver.findElement(basketButton).click();
+    }
+
+    public void refreshStatic () {
+        productsInBasketCount = 0;
+        productsInCompareListCount = 0;
     }
 }

@@ -1,14 +1,11 @@
 package pages_for_Rozetka;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class ProductPage {
@@ -19,7 +16,6 @@ public class ProductPage {
     String zoomImgFirstPositionString;
     String zoomImgFSecondPositionString;
     Robot robot = new Robot();
-    Actions actions;
 
     By compareListIcon = By.xpath("//button[@aria-label='Списки сравнения']");
     By linkOnModalWindow = By.cssSelector("div.modal__holder a");
@@ -60,7 +56,7 @@ public class ProductPage {
     }
 
     public void addToCompareList() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(compareButton)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(compareButton)).click();
         HeaderFunctionsPage.productsInCompareListCount++;
     }
 

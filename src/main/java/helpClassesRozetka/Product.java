@@ -23,6 +23,10 @@ public class Product {
         return price;
     }
 
+    public int getOrderedPrice() {
+        return price*quantity;
+    }
+
     public void setPrice(int price) {
         this.price = price;
     }
@@ -33,5 +37,14 @@ public class Product {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "name='" + name + '\'' +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                '}';
     }
 }
