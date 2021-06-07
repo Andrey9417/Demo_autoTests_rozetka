@@ -2,8 +2,10 @@ package pages_for_Rozetka;
 
 import helpClassesRozetka.Product;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -13,17 +15,22 @@ import java.util.List;
 public class BasketPage {
     WebDriver webDriver;
     WebDriverWait wait;
+    Actions actions;
 
-    //By compareListIcon = By.xpath("//button[@aria-label='Списки сравнения']");
     By closeButton = By.cssSelector("button.modal__close");
     By cartItem = By.cssSelector("li.cart-list__item");
     By priceOfProduct = By.cssSelector("p.cart-product__price");
     By nameOfProduct = By.cssSelector("a.cart-product__title");
     By plusButton = By.cssSelector("button.cart-counter__button~button");
+    By totalPrice = By.cssSelector("div.cart-receipt__sum-price");
+    By productMenu = By.cssSelector("button.context-menu__toggle");
+    By optionDelete = By.cssSelector("button.context-menu-actions__button");
+    By emptyCartDummy = By.cssSelector("img.cart-dummy__illustration");
 
     public BasketPage(WebDriver webDriver) {
         this.webDriver = webDriver;
         wait = new WebDriverWait(webDriver, 10);
+        actions = new Actions(webDriver);
     }
 
     public void closeBasket(){
@@ -43,14 +50,14 @@ public class BasketPage {
                 elem.findElement(plusButton).click();
                 p.setQuantity(p.getQuantity()+1);
                 HeaderFunctionsPage.productsInBasketCount++;
-                waitUntilPriceUpdated(p, listOfElements.indexOf(elem));
+                waitUntilItemPriceUpdated(p, listOfElements.indexOf(elem));
                 break;
             }
         }
 
         return p;
     }
-    private void waitUntilPriceUpdated(Product p, int i) {
+    private void waitUntilItemPriceUpdated(Product p, int i) {
         String text=p.getPrice()*p.getQuantity()+"";
         if(p.getPrice()*p.getQuantity()<1000){
             text +=" ₴";
@@ -58,6 +65,13 @@ public class BasketPage {
             text = text.substring(0, text.length() - 3) + " " + text.substring(text.length() - 3) + " ₴";
         }
         wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("(//p[@class='cart-product__price'])["+(i+1)+"]"), text));
+    }
+
+    private void waitUntilTotalPriceUpdated(Product p1, int sum) {
+        String text=sum - p1.getOrderedPrice()+" ₴";
+        if(!text.equals("0 ₴")){
+            wait.until(ExpectedConditions.textToBePresentInElementLocated(totalPrice, text));
+        }
     }
 
     public boolean containsProduct(Product p){
@@ -71,5 +85,30 @@ public class BasketPage {
             }
         }
         return check;
+    }
+
+    public void deleteProduct(Product p) {
+        int sum = getTotalPrice();
+        List<WebElement> listOfElements = wait.until(ExpectedConditions.visibilityOfAllElements(webDriver.findElements(cartItem)));
+        for( WebElement elem : listOfElements){
+            if(elem.findElement(nameOfProduct).getText().equals(p.getName())){
+                ((JavascriptExecutor) webDriver).executeScript("arguments[0].scrollIntoView(true);", elem.findElement(productMenu));
+                elem.findElement(productMenu).click();
+                webDriver.findElement(optionDelete).click();
+                break;
+            }
+        }
+        HeaderFunctionsPage.productsInBasketCount--;
+        waitUntilTotalPriceUpdated(p, sum);
+    }
+
+    public int getTotalPrice() {
+        String price = webDriver.findElement(totalPrice).getText();
+        price=price.replaceAll("[ ₴]", "");
+        return Integer.parseInt(price);
+    }
+
+    public boolean isBasketEmpty(){
+        return webDriver.findElements(emptyCartDummy).size() == 1;
     }
 }

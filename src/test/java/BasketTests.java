@@ -3,13 +3,9 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import pages_for_Rozetka.*;
 
-import java.awt.*;
 import java.util.concurrent.TimeUnit;
 
 public class BasketTests {
@@ -19,8 +15,6 @@ public class BasketTests {
 
     RozetkaHomePage rozetkaHomePage;
     SearchPage searchPage;
-    ProductPage productPage;
-    CompareListPage compareListPage;
     HeaderFunctionsPage headerFunctionsPage;
     BasketPage basketPage;
 
@@ -33,23 +27,27 @@ public class BasketTests {
     }
 
     @AfterClass
-    public void closeBrowser() {
+    public void killDriver() {
         driver.quit();
     }
 
     @BeforeMethod
-    public void navigateToSite() throws AWTException {
+    public void navigateToSite(){
         driver.get(initialUrl);
         rozetkaHomePage = new RozetkaHomePage(driver);
         searchPage = new SearchPage(driver);
-        productPage = new ProductPage(driver);
-        compareListPage = new CompareListPage(driver);
         headerFunctionsPage = new HeaderFunctionsPage(driver);
         basketPage = new BasketPage(driver);
     }
 
+    @AfterMethod
+    public void cleanCookies(){
+        driver.manage().deleteAllCookies();
+        headerFunctionsPage.refreshStatic();
+    }
+
     @Test
-    public void test() {
+    public void test1() {
         rozetkaHomePage.searchForNotebooks();
         Product product1 = searchPage.addToBasket(0);
         Assert.assertEquals(headerFunctionsPage.getBasketCounter(), "1");
@@ -66,5 +64,29 @@ public class BasketTests {
         headerFunctionsPage.openBasket();
         Assert.assertTrue(basketPage.containsProduct(product2));
         Assert.assertEquals(basketPage.getNumberOfItems(), 2);
+    }
+
+    @Test
+    public void test2() {
+        rozetkaHomePage.searchForNotebooks();
+        Product product1 = searchPage.addToBasket(0);
+        Product product2 = searchPage.addToBasket(1);
+        Product product3 = searchPage.addToBasket(2);
+        Assert.assertEquals(headerFunctionsPage.getBasketCounter(), "3");
+        headerFunctionsPage.openBasket();
+        Assert.assertTrue(basketPage.containsProduct(product1));
+        Assert.assertTrue(basketPage.containsProduct(product2));
+        Assert.assertTrue(basketPage.containsProduct(product3));
+        basketPage.deleteProduct(product1);
+        basketPage.closeBasket();
+        Assert.assertEquals(headerFunctionsPage.getBasketCounter(), "2");
+        headerFunctionsPage.openBasket();
+        Assert.assertTrue(basketPage.containsProduct(product2));
+        Assert.assertTrue(basketPage.containsProduct(product3));
+        Assert.assertEquals(basketPage.getTotalPrice(), product2.getOrderedPrice()+product3.getOrderedPrice());
+        basketPage.deleteProduct(product2);
+        basketPage.deleteProduct(product3);
+        Assert.assertFalse(headerFunctionsPage.isBasketCounterDisplayed());
+        Assert.assertTrue(basketPage.isBasketEmpty());
     }
 }
