@@ -45,27 +45,24 @@ public class BasketPage {
         return listOfElements.size();
     }
 
-    public Product increaseQuantity(Product p) {
+    public void increaseQuantity(Product p) {
         List<WebElement> listOfElements = wait.until(ExpectedConditions.visibilityOfAllElements(webDriver.findElements(cartItem)));
         for( WebElement elem : listOfElements){
             if(elem.findElement(nameOfProduct).getText().equals(p.getName())) {
                 elem.findElement(plusButton).click();
-                p.setQuantity(p.getQuantity()+1);
-                waitUntilItemPriceUpdated(p, listOfElements.indexOf(elem));
+                waitUntilItemPriceUpdated(p.getPrice(), listOfElements.indexOf(elem));
                 break;
             }
         }
-
-        return p;
     }
-    private void waitUntilItemPriceUpdated(Product p, int i) {
-        String text=p.getPrice()*p.getQuantity()+"";
-        if(p.getPrice()*p.getQuantity()<1000){
+    private void waitUntilItemPriceUpdated(int price, int index) {
+        String text=price*2+"";
+        if(price*2<1000){
             text +=" ₴";
         } else {
             text = text.substring(0, text.length() - 3) + " " + text.substring(text.length() - 3) + " ₴";
         }
-        wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("(//p[@class='cart-product__price'])["+(i+1)+"]"), text));
+        wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("(//p[@class='cart-product__price'])["+(index+1)+"]"), text));
     }
 
     private void waitUntilTotalPriceUpdated(int difference, int total) {
@@ -75,12 +72,12 @@ public class BasketPage {
         }
     }
 
-    public boolean containsProduct(Product p){
+    public boolean containsProduct(Product p, int amount){
         boolean check = false;
         List<WebElement> listOfElements = wait.until(ExpectedConditions.visibilityOfAllElements(webDriver.findElements(cartItem)));
         for( WebElement elem : listOfElements){
             if(elem.findElement(nameOfProduct).getText().equals(p.getName()) &&
-                    elem.findElement(priceOfProduct).getText().replaceAll("[ ₴]", "").equals(p.getPrice()*p.getQuantity() +"")) {
+                    elem.findElement(priceOfProduct).getText().replaceAll("[ ₴]", "").equals(p.getPrice()*amount +"")) {
                 check = true;
                 break;
             }
@@ -99,7 +96,7 @@ public class BasketPage {
                 break;
             }
         }
-        waitUntilTotalPriceUpdated(-p.getOrderedPrice(), sum);
+        waitUntilTotalPriceUpdated(-p.getPrice(), sum);
     }
 
     public int getTotalPrice() {
