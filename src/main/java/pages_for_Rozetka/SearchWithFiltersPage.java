@@ -27,7 +27,7 @@ public class SearchWithFiltersPage {
     }
 
     public void addFilterByManufacturer(String company) {
-        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("label[for="+company+"]"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("label[for="+company+"]"))).click();
     }
 
     public void setMinPrice(String price){
