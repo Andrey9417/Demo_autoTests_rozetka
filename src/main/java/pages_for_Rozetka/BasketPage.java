@@ -6,7 +6,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -26,6 +25,9 @@ public class BasketPage {
     By productMenu = By.cssSelector("button.context-menu__toggle");
     By optionDelete = By.cssSelector("button.context-menu-actions__button");
     By emptyCartDummy = By.cssSelector("img.cart-dummy__illustration");
+    By additionalService = By.cssSelector("li.cart-services__item");
+    By priceOfService = By.cssSelector("span.cart-service__prices");
+    By serviceLabel = By.cssSelector("div>label.cart-service__item");
 
     public BasketPage(WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -112,8 +114,23 @@ public class BasketPage {
         return webDriver.findElements(emptyCartDummy).size() == 1;
     }
 
-//    public void addAdditionalServiceByNumber(int number){
-//        List<WebElement> listOfElements = wait.until(ExpectedConditions.visibilityOfAllElements(webDriver.findElements(cartItem)));
-//        webDriver.findElement(cartItem).is
-//    }
+    public int addServiceByNumber(int number){
+        int total = getTotalPrice();
+        int priceOfService = clickOnServiceByNumber(number);
+        waitUntilTotalPriceUpdated(priceOfService, total);
+        return priceOfService;
+    }
+
+    public void deleteServiceByNumber(int number) {
+        int total = getTotalPrice();
+        int priceOfService = clickOnServiceByNumber(number);
+        waitUntilTotalPriceUpdated(-priceOfService, total);
+    }
+
+    private int clickOnServiceByNumber(int number) {
+        WebElement service = wait.until(ExpectedConditions.visibilityOfAllElements(webDriver.findElements(additionalService))).get(number);
+        String s = service.findElement(priceOfService).getText().replaceAll("[ ₴]", "");
+        service.findElement(serviceLabel).click();
+        return Integer.parseInt(s);
+    }
 }

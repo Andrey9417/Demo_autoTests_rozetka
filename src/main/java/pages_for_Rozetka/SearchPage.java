@@ -62,7 +62,7 @@ public class SearchPage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("li>a[href*="+category+"]"))).click();
     }
 
-    public Product addToBasket(int number) {
+    public Product addToBasket(int number){
         listOfElements =wait.until(ExpectedConditions.visibilityOfAllElements(webDriver.findElements(productOnSearchPage)));
         WebElement webElem = listOfElements.get(number).findElement(addToBasketButton);
         safeClick(webElem);
@@ -73,6 +73,4 @@ public class SearchPage {
     public void clickToTheFirstPhone(){
         wait.until(ExpectedConditions.visibilityOfElementLocated(productOnSearchPage)).click();
     }
-
-
 }
