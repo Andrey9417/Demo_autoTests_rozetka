@@ -12,12 +12,10 @@ public class BasketTests {
     private WebDriver driver;
     private String initialUrl = "https://rozetka.com.ua/";
 
-
     RozetkaHomePage rozetkaHomePage;
     SearchPage searchPage;
     HeaderFunctionsPage headerFunctionsPage;
     BasketPage basketPage;
-
 
     @BeforeClass
     public void setupBrowser() {
@@ -78,9 +76,7 @@ public class BasketTests {
         Assert.assertTrue(basketPage.containsProduct(product2));
         Assert.assertTrue(basketPage.containsProduct(product3));
         basketPage.deleteProduct(product1);
-        basketPage.closeBasket();
         Assert.assertEquals(headerFunctionsPage.getBasketCounter(), "2");
-        headerFunctionsPage.openBasket();
         Assert.assertTrue(basketPage.containsProduct(product2));
         Assert.assertTrue(basketPage.containsProduct(product3));
         Assert.assertEquals(basketPage.getTotalPrice(), product2.getOrderedPrice()+product3.getOrderedPrice());
@@ -90,9 +86,18 @@ public class BasketTests {
         Assert.assertTrue(basketPage.isBasketEmpty());
     }
 
-//    @Test
-//    public void testAdditionalServices() {
-//        rozetkaHomePage.searchForNotebooks();
-//
-//    }
+    @Test
+    public void testAdditionalServices() {
+        rozetkaHomePage.searchForPhones();
+        Product product1 = searchPage.addToBasket(0);
+        headerFunctionsPage.openBasket();
+        int priceOfService1 = basketPage.addServiceByNumber(0);
+        Assert.assertEquals(basketPage.getTotalPrice(), priceOfService1 + product1.getPrice());
+        int priceOfService2 = basketPage.addServiceByNumber(1);
+        Assert.assertEquals(basketPage.getTotalPrice(), priceOfService1 + priceOfService2 + product1.getPrice());
+        basketPage.deleteServiceByNumber(0);
+        Assert.assertEquals(basketPage.getTotalPrice(), priceOfService2 + product1.getPrice());
+        basketPage.deleteServiceByNumber(1);
+        Assert.assertEquals(basketPage.getTotalPrice(), product1.getPrice());
+    }
 }
