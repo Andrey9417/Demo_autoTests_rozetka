@@ -97,7 +97,7 @@ public class ProductPage {
         int x = picPhone.getLocation().getX();
         int y = picPhone.getLocation().getY();
         robotMouseMove(x+150, y+350);
-//      Thread.sleep(1500);
+
         WebElement zoomImgSecondPosition = wait.until(ExpectedConditions.elementToBeClickable(zoomedImagePosition));
         zoomImgFSecondPositionString = zoomImgSecondPosition.getAttribute("style");
 
