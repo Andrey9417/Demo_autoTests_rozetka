@@ -30,9 +30,10 @@ public class HeaderFunctionsPage {
         return webDriver.findElement(basketCounter).getText();
     }
 
-    public boolean isBasketCounterDisplayed() {
+    public boolean checkBasketCounterNotDisplayed() {
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(basketCounter));
         List<WebElement> list= webDriver.findElements(basketCounter);
-        return list.size() != 0;
+        return list.size() == 0;
     }
 
     public void openBasket(){

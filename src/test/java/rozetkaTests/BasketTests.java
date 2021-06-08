@@ -70,7 +70,7 @@ public class BasketTests extends BaseTestClass {
         assertEquals(basketPage.getTotalPrice(), product2.getPrice()+product3.getPrice());
         basketPage.deleteProduct(product2);
         basketPage.deleteProduct(product3);
-        assertFalse(headerFunctionsPage.isBasketCounterDisplayed());
+        assertTrue(headerFunctionsPage.checkBasketCounterNotDisplayed());
         assertTrue(basketPage.isBasketEmpty());
     }
 
