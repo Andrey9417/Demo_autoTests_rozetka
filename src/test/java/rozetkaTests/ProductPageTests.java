@@ -38,8 +38,8 @@ public class ProductPageTests extends BaseTestClass {
         searchPage.chooseProductCategory("mobile-phones");
         searchPage.clickToTheFirstPhone();
         assertTrue(productPage.moveToPicturePhone());
-        productPage.checkChangingWhenCoursorMove();
-        productPage.checkWhenCoursorMoveAway();
+        assertTrue(productPage.checkChangingWhenCoursorMove());
+        assertTrue(productPage.checkWhenCoursorMoveAway());
     }
 
     @Test
@@ -47,11 +47,11 @@ public class ProductPageTests extends BaseTestClass {
         rozetkaHomePage.searchByName("samsung");
         searchPage.chooseProductCategory("mobile-phones");
         searchPage.clickToTheFirstPhone();
-        productPage.headerCheckChar();
-        productPage.headerCheckReviews();
-        productPage.headerCheckQuestions();
-        productPage.headerCheckVideo();
-        productPage.headerCheckPhoto();
-        productPage.headerCheckAccessories();
+        assertTrue(productPage.headerCheckChar());
+        assertTrue(productPage.headerCheckReviews());
+        assertTrue(productPage.headerCheckQuestions());
+        assertTrue(productPage.headerCheckVideo());
+        assertTrue(productPage.headerCheckPhoto());
+        assertTrue(productPage.headerCheckAccessories());
     }
 }

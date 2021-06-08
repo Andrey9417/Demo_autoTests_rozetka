@@ -81,110 +81,83 @@ public class ProductPage {
     }
 
     public boolean moveToPicturePhone() {
-        wait.until(ExpectedConditions.elementToBeClickable(imagePhoneZoom));
-
-        robotMouseMove(350,500);
-
+        WebElement picPhone = wait.until(ExpectedConditions.elementToBeClickable(imagePhoneZoom));
+        int x = picPhone.getLocation().getX();
+        int y = picPhone.getLocation().getY();
+        robotMouseMove(x+150, y+200);
+        wait.until(ExpectedConditions.elementToBeClickable(zoomedImagePosition));
         boolean isPresent = webDriver.findElements(zoomActive).size() > 0;
         return isPresent;
     }
 
-    public void checkChangingWhenCoursorMove() {
+    public boolean checkChangingWhenCoursorMove() {
         WebElement zoomImgFirstPosition = webDriver.findElement(zoomedImagePosition);
         zoomImgFirstPositionString = zoomImgFirstPosition.getAttribute("style");
-
-        robotMouseMove(350, 600);
-//        Thread.sleep(1500);
-        WebElement zoomImgSecondPosition = webDriver.findElement(zoomedImagePosition);
+        WebElement picPhone = wait.until(ExpectedConditions.elementToBeClickable(imagePhoneZoom));
+        int x = picPhone.getLocation().getX();
+        int y = picPhone.getLocation().getY();
+        robotMouseMove(x+150, y+350);
+//      Thread.sleep(1500);
+        WebElement zoomImgSecondPosition = wait.until(ExpectedConditions.elementToBeClickable(zoomedImagePosition));
         zoomImgFSecondPositionString = zoomImgSecondPosition.getAttribute("style");
 
-        if (zoomImgFirstPositionString.equals(zoomImgFSecondPositionString)) {
-            System.out.println("False");
-        } else {
-            System.out.println("Ok");
-        }
+        return !zoomImgFirstPositionString.equals(zoomImgFSecondPositionString);
     }
 
-    public void checkWhenCoursorMoveAway() {
-        robotMouseMove(650, 600);
-        Boolean isPresent = webDriver.findElements(zoomedImage).size() > 0;
-        if (isPresent == true) {
-            System.out.println("False");
-        } else {
-            System.out.println("Ok");
-        }
+    public boolean checkWhenCoursorMoveAway() {
+        WebElement picPhone = wait.until(ExpectedConditions.elementToBeClickable(imagePhoneZoom));
+        int x = picPhone.getLocation().getX();
+        int y = picPhone.getLocation().getY();
+        robotMouseMove(x+400, y+350);
+        boolean isPresent = webDriver.findElements(zoomedImage).size() > 0;
+        return !isPresent;
     }
 
-    public void headerCheckChar() {
+    public boolean headerCheckChar() {
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".tabs__list > li:nth-child(2)"))).click();
-        // wait.until(ExpectedConditions.elementToBeClickable(headerOnPage));
         WebElement headerCharacteristics = webDriver.findElement(headerOnPage);
         String headerCharacteristicStr = headerCharacteristics.getText();
-        if (headerCharacteristicStr.contains("Характеристики")) {
-            System.out.println("Ok");
-        } else {
-            System.out.println("False");
-        }
+        return headerCharacteristicStr.contains("Характеристики");
     }
 
-    public void headerCheckReviews() {
+    public boolean headerCheckReviews() {
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".tabs__list > li:nth-child(3)"))).click();
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".product-comments__header > h2")));
         WebElement headerReviews = webDriver.findElement(By.cssSelector(".product-comments__header > h2"));
         String headerReviewsStr = headerReviews.getText();
-        if (headerReviewsStr.contains("Отзывы")) {
-            System.out.println("Ok");
-        } else {
-            System.out.println("False");
-        }
+        return headerReviewsStr.contains("Отзывы");
     }
 
-    public void headerCheckQuestions() {
+    public boolean headerCheckQuestions() {
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".tabs__list > li:nth-child(4)"))).click();
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".product-questions__header > h2")));
         WebElement headerQuestions = webDriver.findElement(By.cssSelector(".product-questions__header > h2"));
         String headerQuestionsStr = headerQuestions.getText();
-        if (headerQuestionsStr.contains("Вопросы")) {
-            System.out.println("Ok");
-        } else {
-            System.out.println("False");
-        }
+        return headerQuestionsStr.contains("Вопросы");
     }
 
-    public void headerCheckVideo() {
+    public boolean headerCheckVideo() {
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".tabs__list > li:nth-child(5)"))).click();
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".layout > h3")));
         WebElement headerVideo = webDriver.findElement(By.cssSelector(".layout > h3"));
         String headerVideoStr = headerVideo.getText();
-        if (headerVideoStr.contains("Видео")) {
-            System.out.println("Ok");
-        } else {
-            System.out.println("False");
-        }
+        return headerVideoStr.contains("Видео");
     }
 
-    public void headerCheckPhoto() {
+    public boolean headerCheckPhoto() {
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".tabs__list > li:nth-child(6)"))).click();
         wait.until(ExpectedConditions.elementToBeClickable(headerOnPage));
         WebElement headerPhoto = webDriver.findElement(headerOnPage);
         String headerPhotoStr = headerPhoto.getText();
-        if (headerPhotoStr.contains("Фотографии")) {
-            System.out.println("Ok");
-        } else {
-            System.out.println("False");
-        }
+        return headerPhotoStr.contains("Фотографии");
     }
 
-    public void headerCheckAccessories() {
+    public boolean headerCheckAccessories() {
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".tabs__list > li:nth-child(7)"))).click();
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".layout > h2")));
         WebElement headerAccessories = webDriver.findElement(By.cssSelector(".layout > h2"));
         String headerAccessoriesStr = headerAccessories.getText();
-        if (headerAccessoriesStr.contains("Аксессуары")) {
-            System.out.println("Ok");
-        } else {
-            System.out.println("False");
-        }
+        return headerAccessoriesStr.contains("Аксессуары");
     }
 }
 
