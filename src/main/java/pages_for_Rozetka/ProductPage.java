@@ -20,6 +20,7 @@ public class ProductPage {
     By compareListIcon = By.xpath("//button[@aria-label='Списки сравнения']");
     By linkOnModalWindow = By.cssSelector("div.modal__holder a");
     By compareButton = By.cssSelector("button.compare-button");
+    By compareButtonStateActive = By.cssSelector("button.compare-button_state_active");
     By priceOfProduct = By.cssSelector("p.product-prices__big");
     By nameOfProduct = By.className("product__title");
 
@@ -57,7 +58,7 @@ public class ProductPage {
 
     public void addToCompareList() {
         wait.until(ExpectedConditions.elementToBeClickable(compareButton)).click();
-        HeaderFunctionsPage.productsInCompareListCount++;
+        wait.until(ExpectedConditions.visibilityOfElementLocated(compareButtonStateActive));
     }
 
     public void checkImg() {

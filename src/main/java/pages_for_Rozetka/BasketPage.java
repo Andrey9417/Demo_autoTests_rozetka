@@ -51,7 +51,6 @@ public class BasketPage {
             if(elem.findElement(nameOfProduct).getText().equals(p.getName())) {
                 elem.findElement(plusButton).click();
                 p.setQuantity(p.getQuantity()+1);
-                HeaderFunctionsPage.productsInBasketCount++;
                 waitUntilItemPriceUpdated(p, listOfElements.indexOf(elem));
                 break;
             }
@@ -100,7 +99,6 @@ public class BasketPage {
                 break;
             }
         }
-        HeaderFunctionsPage.productsInBasketCount--;
         waitUntilTotalPriceUpdated(-p.getOrderedPrice(), sum);
     }
 

@@ -6,9 +6,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class HeaderFunctionsPage {
-    static int productsInBasketCount=0;
-    static int productsInCompareListCount=0;
-
     WebDriver webDriver;
     WebDriverWait wait;
 
@@ -23,12 +20,10 @@ public class HeaderFunctionsPage {
     }
 
     public String getCompareListCounter(){
-        wait.until(ExpectedConditions.textToBePresentInElementLocated(compareListCounter, Integer.toString(productsInCompareListCount)));
         return webDriver.findElement(compareListCounter).getText();
     }
 
     public String getBasketCounter() {
-        wait.until(ExpectedConditions.textToBePresentInElementLocated(basketCounter, Integer.toString(productsInBasketCount)));
         return webDriver.findElement(basketCounter).getText();
     }
 
@@ -39,10 +34,5 @@ public class HeaderFunctionsPage {
 
     public void openBasket(){
         webDriver.findElement(basketButton).click();
-    }
-
-    public void refreshStatic () {
-        productsInBasketCount = 0;
-        productsInCompareListCount = 0;
     }
 }

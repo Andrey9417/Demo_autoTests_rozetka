@@ -47,7 +47,8 @@ public class RozetkaFiltersPageTest {
         searchPage.chooseProductCategory("mobile-phones");
         searchWithFiltersPage.addFilterByManufacturer("Apple");
         searchWithFiltersPage.addFilterByManufacturer("Huawei");
-        Assert.assertTrue(searchWithFiltersPage.checkProductsManufacturer("Samsung", "Apple", "Huawei"));
+        String response = searchWithFiltersPage.checkProductsManufacturer("Samsung", "Apple", "Huawei");
+        Assert.assertEquals(response, "true", response);
     }
 
     @Test
@@ -56,7 +57,8 @@ public class RozetkaFiltersPageTest {
         searchPage.chooseProductCategory("mobile-phones");
         searchWithFiltersPage.setMinPrice("5000");
         searchWithFiltersPage.setMaxPrice("15000");
-        Assert.assertTrue(searchWithFiltersPage.checkPriceDiapason(5000, 15000));
+        String response = searchWithFiltersPage.checkPriceDiapason("5000", "15000");
+        Assert.assertEquals(response, "true", response);
     }
 
     @Test
@@ -64,7 +66,7 @@ public class RozetkaFiltersPageTest {
         rozetkaHomePage.searchByName("samsung");
         searchPage.chooseProductCategory("mobile-phones");
         searchWithFiltersPage.setFilterReadyToDeliver();
-        Assert.assertTrue(searchWithFiltersPage.checkAvailability());
+        Assert.assertTrue(searchWithFiltersPage.isProductAvailable());
     }
 }
 

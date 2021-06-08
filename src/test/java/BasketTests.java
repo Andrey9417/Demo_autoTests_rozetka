@@ -41,7 +41,6 @@ public class BasketTests {
     @AfterMethod
     public void cleanCookies(){
         driver.manage().deleteAllCookies();
-        headerFunctionsPage.refreshStatic();
     }
 
     @Test

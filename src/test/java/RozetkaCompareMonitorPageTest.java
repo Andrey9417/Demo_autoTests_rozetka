@@ -51,20 +51,23 @@ public class RozetkaCompareMonitorPageTest {
     }
 
     @Test
-    public void test() throws Exception {
+    public void testCompareMonitors(){
         rozetkaHomePage.searchForMonitors();
-        searchPage.findProductWithPriceLessThan("4000");
+        Assert.assertTrue(searchPage.findProductWithPriceLessThan("4000"));
+
         priceOfFirstProduct = productPage.getPrice();
         nameOfFirstProduct = productPage.getName();
         productPage.addToCompareList();
         Assert.assertEquals(headerFunctionsPage.getCompareListCounter(), "1");
         productPage.navigateBack();
-        searchPage.findProductWithPriceLessThan(priceOfFirstProduct);
+
+        Assert.assertTrue(searchPage.findProductWithPriceLessThan(priceOfFirstProduct));
         priceOfSecondProduct = productPage.getPrice();
         nameOfSecondProduct = productPage.getName();
         productPage.addToCompareList();
         Assert.assertEquals(headerFunctionsPage.getCompareListCounter(), "2");
         productPage.navigateToCompareList();
+
         Assert.assertEquals(compareListPage.getNumberOfProducts(), 2);
         Assert.assertEquals(compareListPage.getPriceByNumber(1), priceOfFirstProduct);
         Assert.assertEquals(compareListPage.getNameByNumber(1), nameOfFirstProduct);

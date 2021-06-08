@@ -24,13 +24,14 @@ public class SearchPage {
     By addToBasketButton = By.cssSelector("button.goods-tile__buy-button");
     By productName = By.cssSelector("span.goods-tile__title");
     By productPrice = By.cssSelector("span.goods-tile__price-value");
+    By buttonStateInCart = By.cssSelector("button.buy-button_state_in-cart");
 
     public SearchPage (WebDriver webDriver) {
         this.webDriver = webDriver;
         wait = new WebDriverWait(webDriver, 10);
     }
 
-    public void findProductWithPriceLessThan(String maxPrice) throws Exception {
+    public boolean findProductWithPriceLessThan(String maxPrice){
         listOfElements = webDriver.findElements(productOnSearchPage);
         boolean found = false;
         for (WebElement webElem : listOfElements) {
@@ -41,9 +42,7 @@ public class SearchPage {
                 break;
             }
         }
-        if(!found){
-            throw new Exception("product with price less than "+maxPrice+" wasn't found");
-        }
+        return found;
     }
 
     private void safeClick(WebElement elem){
@@ -66,7 +65,7 @@ public class SearchPage {
         listOfElements =wait.until(ExpectedConditions.visibilityOfAllElements(webDriver.findElements(productOnSearchPage)));
         WebElement webElem = listOfElements.get(number).findElement(addToBasketButton);
         safeClick(webElem);
-        HeaderFunctionsPage.productsInBasketCount++;
+        wait.until(ExpectedConditions.visibilityOf(listOfElements.get(number).findElement(buttonStateInCart)));
         return new Product(listOfElements.get(number).findElement(productName).getText(),
                             Integer.parseInt(listOfElements.get(number).findElement(productPrice).getText().replace(" ", "")));
     }

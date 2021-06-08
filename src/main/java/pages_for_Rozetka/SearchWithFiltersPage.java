@@ -42,18 +42,21 @@ public class SearchWithFiltersPage {
         webDriver.findElement(readyToDeliver).click();
     }
 
-    public boolean checkPriceDiapason(int min, int max){
+    public String checkPriceDiapason(String min, String max){
         wait.until(ExpectedConditions.elementToBeClickable(linkToProductPage));
         List<WebElement> listOfElements = webDriver.findElements(productPrice);
-        boolean check = true;
+        String check = "true";
         for(WebElement webElem : listOfElements){
             String priceOfProduct = webElem.getText().replaceAll(" ", "");
-            if(Integer.parseInt(priceOfProduct)>max && Integer.parseInt(priceOfProduct)<min) {check =false;}
+            if(Integer.parseInt(priceOfProduct)>Integer.parseInt(max) || Integer.parseInt(priceOfProduct)<Integer.parseInt(min)) {
+                check =String.format("false: %s < %s < %s", min, priceOfProduct, max);
+                break;
+            }
         }
         return check;
     }
 
-    public boolean checkAvailability(){
+    public boolean isProductAvailable(){
         wait.until(ExpectedConditions.elementToBeClickable(linkToProductPage));
         List<WebElement> listOfElements = webDriver.findElements(availability);
         boolean check = true;
@@ -63,18 +66,22 @@ public class SearchWithFiltersPage {
         return check;
     }
 
-    public boolean checkProductsManufacturer(String... arr){
+    public String checkProductsManufacturer(String... arr){
         wait.until(ExpectedConditions.elementToBeClickable(linkToProductPage));
         List<WebElement> listOfElements = webDriver.findElements(productName);
+        String response = "true";
         boolean check = false;
         for(WebElement webElem : listOfElements){
             String nameOfProduct = webElem.getText();
             for(String word : arr){
                 check=check || nameOfProduct.contains(word);
             }
-            if(!check) {break;}
+            if(!check) {
+                response = String.format("false: name of product: \"%s\"; product's number: \"%d\"", nameOfProduct, listOfElements.indexOf(webElem));
+                break;
+            }
 
         }
-        return check;
+        return response;
     }
 }
