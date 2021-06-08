@@ -106,10 +106,8 @@ public class ProductPage {
     }
 
     public boolean checkWhenCoursorMoveAway() {
-        WebElement picPhone = wait.until(ExpectedConditions.elementToBeClickable(imagePhoneZoom));
-        int x = picPhone.getLocation().getX();
-        int y = picPhone.getLocation().getY();
-        robotMouseMove(x+600, y+350);
+        wait.until(ExpectedConditions.elementToBeClickable(imagePhoneZoom));
+        robotMouseMove(0, 0);
         boolean isPresent = webDriver.findElements(zoomedImage).size() > 0;
         return !isPresent;
     }
