@@ -1,41 +1,23 @@
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
+package rozetkaTests;
+
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages_for_Rozetka.RozetkaHomePage;
 import pages_for_Rozetka.SearchPage;
 import pages_for_Rozetka.SearchWithFiltersPage;
 
-import java.util.concurrent.TimeUnit;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
-public class RozetkaFiltersPageTest {
-
-    private WebDriver driver;
-    private String initialUrl = "https://rozetka.com.ua/";
+public class RozetkaFiltersPageTest extends BaseTestClass{
 
     private RozetkaHomePage rozetkaHomePage;
     private SearchPage searchPage;
     private SearchWithFiltersPage searchWithFiltersPage;
 
-    @BeforeClass
-    public void setupBrowser() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-    }
-
-    @AfterClass
-    public void closeBrowser() {
-        driver.quit();
-    }
-
     @BeforeMethod
-    public void navigateToSite() {
-        driver.get(initialUrl);
+    public void setupBrowserAndPages() {
+        super.setupBrowserAndPages();
         rozetkaHomePage = new RozetkaHomePage(driver);
         searchPage = new SearchPage(driver);
         searchWithFiltersPage = new SearchWithFiltersPage(driver);
@@ -48,7 +30,7 @@ public class RozetkaFiltersPageTest {
         searchWithFiltersPage.addFilterByManufacturer("Apple");
         searchWithFiltersPage.addFilterByManufacturer("Huawei");
         String response = searchWithFiltersPage.checkProductsManufacturer("Samsung", "Apple", "Huawei");
-        Assert.assertEquals(response, "true", response);
+        assertEquals(response, "true", response);
     }
 
     @Test
@@ -58,7 +40,7 @@ public class RozetkaFiltersPageTest {
         searchWithFiltersPage.setMinPrice("5000");
         searchWithFiltersPage.setMaxPrice("15000");
         String response = searchWithFiltersPage.checkPriceDiapason("5000", "15000");
-        Assert.assertEquals(response, "true", response);
+        assertEquals(response, "true", response);
     }
 
     @Test
@@ -66,7 +48,7 @@ public class RozetkaFiltersPageTest {
         rozetkaHomePage.searchByName("samsung");
         searchPage.chooseProductCategory("mobile-phones");
         searchWithFiltersPage.setFilterReadyToDeliver();
-        Assert.assertTrue(searchWithFiltersPage.isProductAvailable());
+        assertTrue(searchWithFiltersPage.isProductAvailable());
     }
 }
 

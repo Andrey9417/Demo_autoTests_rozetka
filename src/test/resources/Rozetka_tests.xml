@@ -3,22 +3,22 @@
 <suite name="Rozetka" >
     <test name="Comparing products" >
         <classes>
-            <class name="RozetkaCompareMonitorPageTest" />
+            <class name="rozetkaTests.RozetkaCompareMonitorPageTest" />
         </classes>
     </test>
     <test name="Filters" >
         <classes>
-            <class name="RozetkaFiltersPageTest" />
+            <class name="rozetkaTests.RozetkaFiltersPageTest" />
         </classes>
     </test>
     <test name="Basket" >
         <classes>
-            <class name="BasketTests" />
+            <class name="rozetkaTests.BasketTests" />
         </classes>
     </test>
     <test name="Products" >
         <classes>
-            <class name="ProductPageTests" />
+            <class name="rozetkaTests.ProductPageTests" />
         </classes>
     </test>
 </suite>
