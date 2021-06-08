@@ -2,8 +2,11 @@ package pages_for_Rozetka;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.List;
 
 public class HeaderFunctionsPage {
     WebDriver webDriver;
@@ -28,8 +31,8 @@ public class HeaderFunctionsPage {
     }
 
     public boolean isBasketCounterDisplayed() {
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(basketCounter));
-        return false;
+        List<WebElement> list= webDriver.findElements(basketCounter);
+        return list.size() != 0;
     }
 
     public void openBasket(){
