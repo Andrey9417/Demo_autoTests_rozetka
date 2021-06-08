@@ -86,6 +86,7 @@ public class ProductPage {
         int y = picPhone.getLocation().getY();
         robotMouseMove(x+150, y+200);
         wait.until(ExpectedConditions.elementToBeClickable(zoomedImagePosition));
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".var-options__list > li")));
         boolean isPresent = webDriver.findElements(zoomActive).size() > 0;
         return isPresent;
     }
@@ -108,7 +109,7 @@ public class ProductPage {
         WebElement picPhone = wait.until(ExpectedConditions.elementToBeClickable(imagePhoneZoom));
         int x = picPhone.getLocation().getX();
         int y = picPhone.getLocation().getY();
-        robotMouseMove(x+400, y+350);
+        robotMouseMove(x+600, y+350);
         boolean isPresent = webDriver.findElements(zoomedImage).size() > 0;
         return !isPresent;
     }

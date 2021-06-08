@@ -58,7 +58,7 @@ public class SearchWithFiltersPage {
 
     public boolean isProductAvailable(){
         wait.until(ExpectedConditions.elementToBeClickable(linkToProductPage));
-        List<WebElement> listOfElements = webDriver.findElements(availability);
+        List<WebElement> listOfElements = wait.until(ExpectedConditions.visibilityOfAllElements(webDriver.findElements(availability)));
         boolean check = true;
         for(WebElement webElem : listOfElements){
             if(!webElem.getText().contains("Готов к отправке")) {check =false;}
