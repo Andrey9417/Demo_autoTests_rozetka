@@ -15,7 +15,7 @@ public class ProductPage {
     String imageSecondSrc;
     String zoomImgFirstPositionString;
     String zoomImgFSecondPositionString;
-    Robot robot = new Robot();
+
 
     By compareListIcon = By.xpath("//button[@aria-label='Списки сравнения']");
     By linkOnModalWindow = By.cssSelector("div.modal__holder a");
@@ -34,7 +34,7 @@ public class ProductPage {
     By headerOnPage = By.cssSelector(".product-tabs__content > h2");
     By headerChar = By.cssSelector(".tabs__list > li:nth-child(2)");
 
-    public ProductPage(WebDriver webDriver) throws AWTException {
+    public ProductPage(WebDriver webDriver){
         this.webDriver = webDriver;
         wait = new WebDriverWait(webDriver, 10);
     }
@@ -61,40 +61,40 @@ public class ProductPage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(compareButtonStateActive));
     }
 
-    public void checkImg() {
+    public boolean checkScrollBarImg() {
         WebElement pictureFirstColor = webDriver.findElement(imagePhoneScrollBar);
         imageFirstSrc = pictureFirstColor.getAttribute("src");
         wait.until(ExpectedConditions.elementToBeClickable(colorWrapperFirst)).click();
         WebElement pictureSecondColor = webDriver.findElement(imagePhoneScrollBar);
         imageSecondSrc = pictureSecondColor.getAttribute("src");
 
-        if (imageFirstSrc.equals(imageSecondSrc)) {
-            System.out.println("False");
-        } else {
-            System.out.println("Ok");
+        return !imageFirstSrc.equals(imageSecondSrc);
+    }
+
+    public void robotMouseMove(int x, int y) {
+        try {
+            Robot robot = new Robot();
+            robot.mouseMove(x, y);
+        } catch (AWTException e) {
+            e.printStackTrace();
         }
     }
 
-    public void moveToPicturePhone() {
+    public boolean moveToPicturePhone() {
         wait.until(ExpectedConditions.elementToBeClickable(imagePhoneZoom));
 
-        robot.mouseMove(350, 500);
+        robotMouseMove(350,500);
 
-
-        Boolean isPresent = webDriver.findElements(zoomActive).size() > 0;
-        if (isPresent == true) {
-            System.out.println("Ok");
-        } else {
-            System.out.println("False");
-        }
+        boolean isPresent = webDriver.findElements(zoomActive).size() > 0;
+        return isPresent;
     }
 
-    public void checkChangingWhenCoursorMove() throws InterruptedException {
+    public void checkChangingWhenCoursorMove() {
         WebElement zoomImgFirstPosition = webDriver.findElement(zoomedImagePosition);
         zoomImgFirstPositionString = zoomImgFirstPosition.getAttribute("style");
 
-        robot.mouseMove(350, 600);
-        Thread.sleep(1500);
+        robotMouseMove(350, 600);
+//        Thread.sleep(1500);
         WebElement zoomImgSecondPosition = webDriver.findElement(zoomedImagePosition);
         zoomImgFSecondPositionString = zoomImgSecondPosition.getAttribute("style");
 
@@ -106,7 +106,7 @@ public class ProductPage {
     }
 
     public void checkWhenCoursorMoveAway() {
-        robot.mouseMove(650, 600);
+        robotMouseMove(650, 600);
         Boolean isPresent = webDriver.findElements(zoomedImage).size() > 0;
         if (isPresent == true) {
             System.out.println("False");

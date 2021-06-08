@@ -29,6 +29,6 @@ public class BaseTestClass {
     @BeforeMethod
     public void setupBrowserAndPages(){
         driver.get(initialUrl);
-
     }
+
 }
