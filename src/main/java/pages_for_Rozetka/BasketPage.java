@@ -106,7 +106,7 @@ public class BasketPage {
     }
 
     public boolean isBasketEmpty(){
-        return webDriver.findElements(emptyCartDummy).size() == 1;
+        return webDriver.findElements(cartItem).size() == 0;
     }
 
     public int addServiceByNumber(int number){

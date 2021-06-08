@@ -68,7 +68,7 @@ public class SearchWithFiltersPage {
 
     public String checkProductsManufacturer(String... arr){
         wait.until(ExpectedConditions.elementToBeClickable(linkToProductPage));
-        List<WebElement> listOfElements = webDriver.findElements(productName);
+        List<WebElement> listOfElements = wait.until(ExpectedConditions.visibilityOfAllElements(webDriver.findElements(productName)));
         String response = "true";
         boolean check = false;
         for(WebElement webElem : listOfElements){
