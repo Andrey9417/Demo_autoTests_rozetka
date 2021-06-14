@@ -15,7 +15,7 @@ public class SearchWithFiltersPage {
 
     By minPrice = By.cssSelector("input[formcontrolname=min]");
     By maxPrice = By.cssSelector("input[formcontrolname=max]");
-    By readyToDeliver = By.xpath("//label[@for='Готов к отправке']");
+    By readyToDeliver = By.cssSelector("a[href*=gotovo-k-otpravke]");
     By productPrice = By.cssSelector("span.goods-tile__price-value");
     By productName = By.cssSelector("span.goods-tile__title");
     By availability = By.cssSelector("div.goods-tile__availability");

@@ -21,7 +21,7 @@ public class BasketPage {
     By priceOfProduct = By.cssSelector("p.cart-product__price");
     By nameOfProduct = By.cssSelector("a.cart-product__title");
     By plusButton = By.cssSelector("button.cart-counter__button~button");
-    By totalPrice = By.cssSelector("div.cart-receipt__sum-price");
+    By totalPrice = By.cssSelector("div.cart-receipt__sum-price>span");
     By productMenu = By.cssSelector("button.context-menu__toggle");
     By optionDelete = By.cssSelector("button.context-menu-actions__button");
     By emptyCartDummy = By.cssSelector("img.cart-dummy__illustration");
@@ -66,8 +66,8 @@ public class BasketPage {
     }
 
     private void waitUntilTotalPriceUpdated(int difference, int total) {
-        String text=total + difference+" ₴";
-        if(!text.equals("0 ₴")){
+        String text=total + difference + "";
+        if(!text.equals("0")){
             wait.until(ExpectedConditions.textToBePresentInElementLocated(totalPrice, text));
         }
     }
@@ -101,7 +101,6 @@ public class BasketPage {
 
     public int getTotalPrice() {
         String price = webDriver.findElement(totalPrice).getText();
-        price=price.replaceAll("[ ₴]", "");
         return Integer.parseInt(price);
     }
 
