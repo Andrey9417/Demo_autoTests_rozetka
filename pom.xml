@@ -26,7 +26,7 @@
                 <inherited>true</inherited>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>test.xml</suiteXmlFile>
+                        <suiteXmlFile>Rozetka_tests.xml</suiteXmlFile>
                     </suiteXmlFiles>
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
