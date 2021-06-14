@@ -19,6 +19,7 @@ public class RozetkaHomePage {
     By submenuElementNotebooks = By.cssSelector("a.menu__hidden-title[href*='/notebooks/']");
     By submenuElementPhones = By.cssSelector("a.menu__hidden-title[href*='/mobile-phones/']");
     By searchField = By.name("search");
+    By catalogButton = By.cssSelector("button#fat-menu");
 
     public RozetkaHomePage (WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -27,18 +28,17 @@ public class RozetkaHomePage {
     }
 
     public void searchForMonitors() {
-        WebElement linkComputersAndNotebooks = webDriver.findElement(menuElementComputers);
-        actions.moveToElement(linkComputersAndNotebooks).perform();
+        webDriver.findElement(catalogButton).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(submenuElementMonitors)).click();
     }
 
     public void searchForNotebooks() {
-        WebElement linkComputersAndNotebooks = webDriver.findElement(menuElementComputers);
-        actions.moveToElement(linkComputersAndNotebooks).perform();
+        webDriver.findElement(catalogButton).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(submenuElementNotebooks)).click();
     }
 
     public void searchForPhones() {
+        webDriver.findElement(catalogButton).click();
         WebElement linkSmartPhones = webDriver.findElement(smartPhonesTV);
         actions.moveToElement(linkSmartPhones).perform();
         wait.until(ExpectedConditions.visibilityOfElementLocated(submenuElementPhones)).click();

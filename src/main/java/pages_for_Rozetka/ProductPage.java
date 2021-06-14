@@ -114,6 +114,7 @@ public class ProductPage {
 
     public boolean headerCheckChar() {
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".tabs__list > li:nth-child(2)"))).click();
+        wait.until(ExpectedConditions.elementToBeClickable(headerOnPage));
         WebElement headerCharacteristics = webDriver.findElement(headerOnPage);
         String headerCharacteristicStr = headerCharacteristics.getText();
         return headerCharacteristicStr.contains("Характеристики");
