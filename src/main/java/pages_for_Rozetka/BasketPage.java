@@ -49,24 +49,26 @@ public class BasketPage {
         List<WebElement> listOfElements = wait.until(ExpectedConditions.visibilityOfAllElements(webDriver.findElements(cartItem)));
         for( WebElement elem : listOfElements){
             if(elem.findElement(nameOfProduct).getText().equals(p.getName())) {
+                int sum = getTotalPrice();
                 elem.findElement(plusButton).click();
-                waitUntilItemPriceUpdated(p.getPrice(), listOfElements.indexOf(elem));
+                waitUntilTotalPriceUpdated(p.getPrice(), sum);
+                //waitUntilItemPriceUpdated(p.getPrice(), listOfElements.indexOf(elem));
                 break;
             }
         }
     }
-    private void waitUntilItemPriceUpdated(int price, int index) {
-        String text=price*2+"";
-        if(price*2<1000){
-            text +=" ₴";
-        } else {
-            text = text.substring(0, text.length() - 3) + " " + text.substring(text.length() - 3) + " ₴";
-        }
-        wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("(//p[@class='cart-product__price'])["+(index+1)+"]"), text));
-    }
+//    private void waitUntilItemPriceUpdated(int price, int index) {
+//        String text=price*2+"";
+//        if(price*2<1000){
+//            text +=" ₴";
+//        } else {
+//            text = text.substring(0, text.length() - 3) + " " + text.substring(text.length() - 3) + " ₴";
+//        }
+//        wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("(//p[@class='cart-product__price'])["+(index+1)+"]"), text));
+//    }
 
     private void waitUntilTotalPriceUpdated(int difference, int total) {
-        String text=total + difference + "";
+        String text=Integer.toString(total + difference);
         if(!text.equals("0")){
             wait.until(ExpectedConditions.textToBePresentInElementLocated(totalPrice, text));
         }
@@ -76,8 +78,9 @@ public class BasketPage {
         boolean check = false;
         List<WebElement> listOfElements = wait.until(ExpectedConditions.visibilityOfAllElements(webDriver.findElements(cartItem)));
         for( WebElement elem : listOfElements){
-            if(elem.findElement(nameOfProduct).getText().equals(p.getName()) &&
-                    elem.findElement(priceOfProduct).getText().replaceAll("[ ₴]", "").equals(p.getPrice()*amount +"")) {
+            String price = elem.findElement(priceOfProduct).getText();
+            price =price.substring(0, price.length()-2).replaceAll(" ", "");
+            if(elem.findElement(nameOfProduct).getText().equals(p.getName()) && price.equals(p.getPrice()*amount +"")) {
                 check = true;
                 break;
             }
@@ -123,7 +126,8 @@ public class BasketPage {
 
     private int clickOnServiceByNumber(int number) {
         WebElement service = wait.until(ExpectedConditions.visibilityOfAllElements(webDriver.findElements(additionalService))).get(number);
-        String s = service.findElement(priceOfService).getText().replaceAll("[ ₴]", "");
+        String s = service.findElement(priceOfService).getText();
+        s=s.substring(0, s.length()-2).replaceAll(" ", "");
         service.findElement(serviceLabel).click();
         return Integer.parseInt(s);
     }
