@@ -1,1 +1,0 @@
-{"uuid":"8a3d8efe-3e13-4a32-8c83-9d7849e2e635","name":"rozetkaTests.BasketTests.setupBrowserAndPages","description":"","start":1623683168258,"stop":1623683184847,"children":["64ca8639-5cd6-41fa-9d8b-ff1a190a94f7"],"befores":[{"name":"setupBrowserAndPages","status":"passed","stage":"finished","description":"","start":1623683168258,"stop":1623683184843}]}
