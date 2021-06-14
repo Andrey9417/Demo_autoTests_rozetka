@@ -26,12 +26,12 @@ public class SearchPage {
     By productPrice = By.cssSelector("span.goods-tile__price-value");
     By buttonStateInCart = By.cssSelector("button.buy-button_state_in-cart");
 
-    public SearchPage (WebDriver webDriver) {
+    public SearchPage(WebDriver webDriver) {
         this.webDriver = webDriver;
         wait = new WebDriverWait(webDriver, 10);
     }
 
-    public boolean findProductWithPriceLessThan(String maxPrice){
+    public boolean findProductWithPriceLessThan(String maxPrice) {
         listOfElements = webDriver.findElements(productOnSearchPage);
         boolean found = false;
         for (WebElement webElem : listOfElements) {
@@ -45,11 +45,11 @@ public class SearchPage {
         return found;
     }
 
-    private void safeClick(WebElement elem){
+    private void safeClick(WebElement elem) {
         try {
             elem.click();
         } catch (ElementClickInterceptedException e) {
-            if(webDriver.findElement(banner).isDisplayed()){
+            if (webDriver.findElement(banner).isDisplayed()) {
                 webDriver.findElement(banner_close_button).click();
                 wait.until(ExpectedConditions.invisibilityOfElementLocated(banner));
                 elem.click();
@@ -57,21 +57,20 @@ public class SearchPage {
         }
     }
 
-    public void chooseProductCategory(String category){
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("li>a[href*="+category+"]"))).click();
+    public void chooseProductCategory(String category) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("li>a[href*=" + category + "]"))).click();
     }
 
-    public Product addToBasket(int number){
-        listOfElements =wait.until(ExpectedConditions.visibilityOfAllElements(webDriver.findElements(productOnSearchPage)));
+    public Product addToBasket(int number) {
+        listOfElements = wait.until(ExpectedConditions.visibilityOfAllElements(webDriver.findElements(productOnSearchPage)));
         WebElement webElem = listOfElements.get(number).findElement(addToBasketButton);
         safeClick(webElem);
         wait.until(ExpectedConditions.visibilityOf(listOfElements.get(number).findElement(buttonStateInCart)));
-        System.out.println("name of product: "+listOfElements.get(number).findElement(productName).getText());
-        System.out.println("price of product: "+listOfElements.get(number).findElement(productPrice).getText());
         return new Product(listOfElements.get(number).findElement(productName).getText(),
-                            Integer.parseInt(listOfElements.get(number).findElement(productPrice).getText().replace(" ", "")));
+                Integer.parseInt(listOfElements.get(number).findElement(productPrice).getText().replace(" ", "")));
     }
-    public void clickToTheFirstPhone(){
+
+    public void clickToTheFirstPhone() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(productOnSearchPage)).click();
     }
 }

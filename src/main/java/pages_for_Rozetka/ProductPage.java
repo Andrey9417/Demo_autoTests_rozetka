@@ -24,7 +24,6 @@ public class ProductPage {
     By priceOfProduct = By.cssSelector("p.product-prices__big");
     By nameOfProduct = By.className("product__title");
 
-    By colorOfProduct = By.className("goods-tile__colors"); //not needed yet - needed to verify the color of the product
     By colorWrapperFirst = By.cssSelector(".var-options__list > li:nth-child(1)");
     By imagePhoneScrollBar = By.cssSelector(".scrollbar__inner > li:nth-child(1) > a > img");
     By imagePhoneZoom = By.cssSelector(".product-photo > div >figure> img ");//By.className("product-photo__picture");
@@ -32,7 +31,6 @@ public class ProductPage {
     By zoomedImage = By.className("zoom-sticky");
     By zoomedImagePosition = By.cssSelector(".zoom-container-main > div > img");
     By headerOnPage = By.cssSelector(".product-tabs__content > h2");
-    By headerChar = By.cssSelector(".tabs__list > li:nth-child(2)");
 
     public ProductPage(WebDriver webDriver){
         this.webDriver = webDriver;

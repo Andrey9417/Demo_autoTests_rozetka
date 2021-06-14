@@ -24,7 +24,6 @@ public class BasketPage {
     By totalPrice = By.cssSelector("div.cart-receipt__sum-price>span");
     By productMenu = By.cssSelector("button.context-menu__toggle");
     By optionDelete = By.cssSelector("button.context-menu-actions__button");
-    By emptyCartDummy = By.cssSelector("img.cart-dummy__illustration");
     By additionalService = By.cssSelector("li.cart-services__item");
     By priceOfService = By.cssSelector("span.cart-service__prices");
     By serviceLabel = By.cssSelector("div>label.cart-service__item");
@@ -52,20 +51,10 @@ public class BasketPage {
                 int sum = getTotalPrice();
                 elem.findElement(plusButton).click();
                 waitUntilTotalPriceUpdated(p.getPrice(), sum);
-                //waitUntilItemPriceUpdated(p.getPrice(), listOfElements.indexOf(elem));
                 break;
             }
         }
     }
-//    private void waitUntilItemPriceUpdated(int price, int index) {
-//        String text=price*2+"";
-//        if(price*2<1000){
-//            text +=" ₴";
-//        } else {
-//            text = text.substring(0, text.length() - 3) + " " + text.substring(text.length() - 3) + " ₴";
-//        }
-//        wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("(//p[@class='cart-product__price'])["+(index+1)+"]"), text));
-//    }
 
     private void waitUntilTotalPriceUpdated(int difference, int total) {
         String text=Integer.toString(total + difference);

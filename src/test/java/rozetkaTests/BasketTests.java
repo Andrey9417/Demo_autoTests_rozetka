@@ -52,8 +52,6 @@ public class BasketTests extends BaseTestClass {
         assertEquals(basketPage.getNumberOfItems(), 2);
     }
 
-    // /*
-
     @Test
     public void testRemoveProductsFromBasket() {
         rozetkaHomePage.searchForNotebooks();
@@ -90,6 +88,4 @@ public class BasketTests extends BaseTestClass {
         basketPage.deleteServiceByNumber(1);
         assertEquals(basketPage.getTotalPrice(), product1.getPrice());
     }
-
-    // */
 }
