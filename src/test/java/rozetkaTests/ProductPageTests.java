@@ -23,24 +23,24 @@ public class ProductPageTests extends BaseTestClass {
         productPage = new ProductPage(driver);
     }
 
-    @Test
-    public void testProductPageFirst(){
-        rozetkaHomePage.searchByName("samsung");
-        searchPage.chooseProductCategory("mobile-phones");
-        searchPage.clickToTheFirstPhone();
-        assertTrue(productPage.checkScrollBarImg());
-    }
-
-    @Test
-    public void testProductPageSecond() {
-        driver.manage().window().maximize();
-        rozetkaHomePage.searchByName("samsung");
-        searchPage.chooseProductCategory("mobile-phones");
-        searchPage.clickToTheFirstPhone();
-        assertTrue(productPage.moveToPicturePhone());
-        assertTrue(productPage.checkChangingWhenCoursorMove());
-        assertTrue(productPage.checkWhenCoursorMoveAway());
-    }
+//    @Test
+//    public void testProductPageFirst(){
+//        rozetkaHomePage.searchByName("samsung");
+//        searchPage.chooseProductCategory("mobile-phones");
+//        searchPage.clickToTheFirstPhone();
+//        assertTrue(productPage.checkScrollBarImg());
+//    }
+//
+//    @Test
+//    public void testProductPageSecond() {
+//        driver.manage().window().maximize();
+//        rozetkaHomePage.searchByName("samsung");
+//        searchPage.chooseProductCategory("mobile-phones");
+//        searchPage.clickToTheFirstPhone();
+//        assertTrue(productPage.moveToPicturePhone());
+//        assertTrue(productPage.checkChangingWhenCoursorMove());
+//        assertTrue(productPage.checkWhenCoursorMoveAway());
+//    }
 
     @Test
     public void testProductPageThird(){
