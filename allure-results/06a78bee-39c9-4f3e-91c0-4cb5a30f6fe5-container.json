@@ -1,0 +1,1 @@
+{"uuid":"06a78bee-39c9-4f3e-91c0-4cb5a30f6fe5","name":"rozetkaTests.BasketTests.cleanCookies","description":"","start":1623683551288,"stop":1623683551514,"children":["bb4d68c0-81cb-45b6-8587-b5fecba465c4"],"afters":[{"name":"cleanCookies","status":"passed","stage":"finished","description":"","start":1623683551289,"stop":1623683551514}]}

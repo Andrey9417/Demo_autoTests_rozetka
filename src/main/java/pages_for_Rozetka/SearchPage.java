@@ -66,6 +66,8 @@ public class SearchPage {
         WebElement webElem = listOfElements.get(number).findElement(addToBasketButton);
         safeClick(webElem);
         wait.until(ExpectedConditions.visibilityOf(listOfElements.get(number).findElement(buttonStateInCart)));
+        System.out.println("name of product: "+listOfElements.get(number).findElement(productName).getText());
+        System.out.println("price of product: "+listOfElements.get(number).findElement(productPrice).getText());
         return new Product(listOfElements.get(number).findElement(productName).getText(),
                             Integer.parseInt(listOfElements.get(number).findElement(productPrice).getText().replace(" ", "")));
     }
